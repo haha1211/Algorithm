@@ -29,3 +29,4 @@ while stack:
 # 정답 출력
 for i in range(2, n+1):
     print(par[i])
+
