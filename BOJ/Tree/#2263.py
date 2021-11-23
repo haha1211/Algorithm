@@ -50,3 +50,4 @@ while stack:
     temp = cur.left
     if temp:
         stack.append(temp)
+
