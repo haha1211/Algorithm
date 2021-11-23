@@ -54,3 +54,4 @@ def postorder(node):
 
 tree = buildTree(0, length)
 postorder(tree)
+
