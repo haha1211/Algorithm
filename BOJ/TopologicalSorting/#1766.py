@@ -18,7 +18,8 @@ for _ in range(m):
 # minheap
 Q = []
 
-# problem[i][1] == 0 => i를 푸는데 제약 없음 즉, 바로 풀기 가능
+# pological Sorting(위상정렬)
+# problem[i][1] == 0 => indegree = 0 => i를 푸는데 제약 없음 즉, 바로 풀기 가능
 # 이 경우 Q에 push
 for i in range(1,n+1):
     if problem[i][1] == 0:
@@ -29,9 +30,10 @@ while Q:
     x, y = heapq.heappop(Q)
     result.append(x)
     if y:
-        # y(i) 이후에 풀 수 있는 문제들 확인 후, 이제 풀기 가능한 문제들 Q에 push
         for j in y:
+            # x node에서 나가는 edge 제거
             problem[j][1] -= 1
+            # x 이후 풀기 가능한 문제들 확인 후, Q에 push
             if problem[j][1] == 0:
                 heapq.heappush(Q, (j, problem[j][0]))
 
