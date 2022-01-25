@@ -5,12 +5,14 @@ input = sys.stdin.readline
 
 n, m, x = map(int, input().split())
 graph = [[] for _ in range(n+1)]
+back_graph = [[] for _ in range(n+1)]
 
 for _ in range(m):
     u, v, w = map(int, input().split())
     graph[u].append((v, w))
+    back_graph[v].append((u, w))
 
-def dijkstra(start):
+def dijkstra(start, graph):
     dist = [float("INF")] * (n+1)
     Q = [(0, start)]
 
@@ -24,9 +26,8 @@ def dijkstra(start):
 
     return dist
 
-dist = [[]]
-for i in range(1, n+1):
-    dist.append(dijkstra(i))
+result = dijkstra(x, graph)
+back_result = dijkstra(x, back_graph)
 
-result = max(dist[i][x] + dist[x][i] for i in range(1, n+1))
+result = max(result[i] + back_result[i] for i in range(1, n+1))
 print(result)
