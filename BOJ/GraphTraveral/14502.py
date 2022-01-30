@@ -19,36 +19,40 @@ for _ in range(n):
 
 virus_list = []
 wall = []
+wall_num = 0
 for i in range(n):
     for j in range(m):
         if graph[i][j] == 0:
             wall.append((i*m)+j)
         elif graph[i][j] == 2:
             virus_list.append((i, j))
+        else:
+            wall_num += 1
 wall = list(combinations(wall,3))
 
 
-def bfs(graph, wall, virus_list,n, m):
+def bfs(graph, wall, virus_list,n, m, wall_num):
     for i in wall:
         graph[i//m][i%m] = 1
+        wall_num += 1
 
     queue = deque()
     for x, y in virus_list:
         queue.append((x,y))
     while queue:
         x, y = queue.popleft()
+        wall_num += 1
         for i in range(4):
             xx = x + dx[i]
             yy = y + dy[i]
             if 0 <= xx < n and 0 <= yy < m and graph[xx][yy] == 0:
                 graph[xx][yy] = 2
                 queue.append((xx, yy))
-    safety = sum(i.count(0) for i in graph)
-    return safety
+    return n *m - wall_num
 
 safety = 0
 for i in wall:
-    count = bfs(deepcopy(graph), i, virus_list, n, m)
+    count = bfs(deepcopy(graph), i, virus_list, n, m, wall_num)
     safety = max(safety, count)
 
 print(safety)
